@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { App, reRender } from './App';
+debugger;
+reRender();
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+
+
+
