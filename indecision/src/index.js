@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { App, reRender } from './App';
-debugger;
-reRender();
+import IndecisionApp from './App';
 
 
 
+ReactDOM.render(<IndecisionApp/>, document.getElementById('root'));
 
 
 

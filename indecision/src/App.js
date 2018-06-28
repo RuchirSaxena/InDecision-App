@@ -1,65 +1,66 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import ReactDOM from 'react-dom';
 import './App.css';
 
-
-const appData = {
-  options: ['one']
-}
-
-const onFromSubmit = (e) => {
-  e.preventDefault();
-  const option = e.target.elements.txtOption.value;
-  console.log(option);
- debugger;
-  if (!option) {
-    alert("Enter Option");
-  } else {
-    appData.options.push(option);
+class IndecisionApp extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Header />
+        <Action />
+        <Options />
+        <AddOption />
+      </React.Fragment>
+    );
   }
-  e.target.elements.txtOption.value="";
-  reRender();
 }
 
-const onMakeDecision = (e) => {
-  e.preventDefault();
-  const randomNum = Math.floor(Math.random() * appData.options.length);
-  let selectedElement = appData.options[randomNum];
-  console.log(selectedElement);
-  alert(selectedElement);
-}
-
-const onRemoveAll = (e) => {
-  e.preventDefault();
-  appData.options = [];
-  reRender();
-}
-let App ="";
-const reRender=()=>{
-   App =
-(
+const Header = () => {
+  return (
     <React.Fragment>
-      <h1>Indecision App</h1>
-      <form onSubmit={onFromSubmit}>
-        <button disabled={appData.options.length===0} onClick={onMakeDecision}>What should I do ?</button>
-        <button onClick={onRemoveAll}>Remove All</button>
-        <br />
-        <input type="text" name="txtOption" id="" />
-        <button>Add Option</button><br />
-
-        {(appData.options && appData.options.length > 0) && <ul>
-          {
-            appData.options.map((option) => {
-              return <li key={option}>{option}</li>
-            })
-          }
-        </ul>
-        }
-      </form>
+      <h1>Indecision</h1>
+      <h3>Put Your Life in the hands of computer</h3>
     </React.Fragment>
   );
-  ReactDOM.render(App, document.getElementById('root'));
 }
 
-export { App, reRender};
+const Action = () => {
+  function  handelPick(){
+     alert("test");
+  }
+  return (
+    <React.Fragment>
+      {/* <p>What you want to do ?</p> */}
+      <input type="button" onClick={handelPick} value="What you want to do ?" />
+    </React.Fragment>
+  );
+}
+
+const Options = () => {
+  return (
+    <React.Fragment>
+      <p>Options Componet</p>
+      <p>Options</p>
+    </React.Fragment>
+  );
+}
+
+const Option = () => {
+  return (
+    <React.Fragment>
+      <p>Option Componet</p>
+    </React.Fragment>
+  );
+}
+
+const AddOption = () => {
+  return (
+    <React.Fragment>
+      <p>Add Option Here</p>
+    </React.Fragment>
+  );
+}
+
+export default IndecisionApp;
+
+
+
