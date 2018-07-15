@@ -1,148 +1,146 @@
 
 
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 // import './App.css';
 
-class Counter extends Component{
-  constructor(props){
-    super(props);
-    //Setting Default value of state
-    this.state={
-      counter:0
+
+class IndecisionApp extends Component {
+  constructor() {
+    super();
+    this.state = {
+      options: []
     }
-    console.log(this.props);
-    /*
-    Binding the 'this' context to the function ,
-    Below approach is performance efficent as 'this' context will be set to the fuctions only once and not again and again when the component re-renders again and again.
-    */
-    this.incrementCounter=this.incrementCounter.bind(this);
-    this.decrementCounter = this.decrementCounter.bind(this);
-    this.resetCounter = this.resetCounter.bind(this);
-  }
-  
-  incrementCounter(){
-      /**
-       * setState() is a react predefined method to re-render 
-       our Component with new modifications to the DOM if any 
-       * setState() method takes callback fuction which returns an object with state changes
-       */
-      this.setState((oldState)=>{
-        return {
-          counter: oldState.counter +1
-        }
-      });
+    this.handelRemoveAll = this.handelRemoveAll.bind(this);
+    this.handelPick = this.handelPick.bind(this);
+    this.handelAddoption = this.handelAddoption.bind(this);
   }
 
-  decrementCounter() {
-    this.setState((prevState)=>{
-      return{
-        counter:prevState.counter-1
-      }
-    });
-  }
-
-  resetCounter() {
-    this.setState(()=>{
+  handelRemoveAll() {
+    this.setState(() => {
       return {
-        counter:0
-      }
+        options: []
+      };
     });
   }
 
-  render(){
-    return(
-      <div>
-        <h1>Count :{this.state.counter}</h1>
-        <button onClick={this.incrementCounter}>+1</button>
-        <button onClick={this.decrementCounter}>-1</button>
-        <button onClick={this.resetCounter}>Reset</button>
-      </div>
-    );
+  handelPick() {
+    const randomNo = Math.floor(Math.random() * this.state.options.length);
+    const randomOption = this.state.options[randomNo];
+   
+    alert(randomOption);
+  }
 
+  handelAddoption(option) {
+   
+    let options = this.state.options;
+    options.push(option);
+    this.setState(() => {
+      return {
+        options: options
+      };
+    });
+
+  }
+  render() {
+    const title = 'Indecision';
+    const subtitle = 'Put your life in the hands of computer';
+     const options = [];
+    return (
+      <React.Fragment>
+        <Header
+          title={title}
+          subtitle={subtitle} />
+        <Action
+          options={this.state.options}
+          handelPick={this.handelPick} />
+        <Options
+          options={this.state.options}
+          handelRemoveAll={this.handelRemoveAll}
+        />
+        <AddOption
+          handelAddoption={this.handelAddoption} />
+      </React.Fragment>
+    );
   }
 }
 
- export default Counter;
+const Header = (props) => {
+  return (
+    <React.Fragment>
+      <h1>{props.title}</h1>
+      <h3>{props.subtitle}</h3>
+    </React.Fragment>
+  );
+}
 
-// class IndecisionApp extends Component {
-//   render() {
-//     const title = 'Indecision';
-//     const subtitle = 'Put your life in the hands of computer';
-//     const options = ['Thing One', 'Thing Two', 'Thing four'];
-//     return (
-//       <React.Fragment>
-//         <Header title={title} subtitle={subtitle} />
-//         <Action />
-//         <Options options={options} />
-//         <AddOption />
-//       </React.Fragment>
-//     );
-//   }
-// }
+class Action extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <input type="button"
+          disabled={this.props.options.length > 0 ? "" : "disabled"}
+          onClick={this.props.handelPick} value="What you want to do ?" />
+      </React.Fragment>
+    );
+  }
 
-// const Header = (props) => {
-//   return (
-//     <React.Fragment>
-//       <h1>{props.title}</h1>
-//       <h3>{props.subtitle}</h3>
-//     </React.Fragment>
-//   );
-// }
+}
 
-// const Action = () => {
-//   const handelPick = () => {
-//     alert("test");
-//   }
-//   return (
-//     <React.Fragment>
-//       <input type="button" onClick={handelPick} value="What you want to do ?" />
-
-//     </React.Fragment>
-//   );
-// }
-
-// class Options extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.handelRemoveAll = this.handelRemoveAll.bind(this);
-//   }
-
-//   handelRemoveAll() {
-//     console.log(this.props.options);
-//   }
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <input type="button" onClick={this.handelRemoveAll} value="Remove All" />
-//         {
-//           this.props.options.map(option => {
-//             return <Option option={option} />
-//           })
-//         }
-//       </React.Fragment>
-//     );
-//   }
-// }
+class Options extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <input type="button" onClick={this.props.handelRemoveAll} value="Remove All" />
+        {
+          this.props.options.map(option => {
+            return <Option key={option} option={option} />
+          })
+        }
+      </React.Fragment>
+    );
+  }
+}
 
 
-// const Option = (props) => {
-//   return (
-//     <React.Fragment>
-//       <div>{props.option}</div>
-//     </React.Fragment>
-//   );
-// }
+const Option = (props) => {
+  return (
+    <React.Fragment>
+      <div>{props.option}</div>
+    </React.Fragment>
+  );
+}
 
-// const AddOption = () => {
-//   return (
-//     <React.Fragment>
-//       <input type="text" />
-//       <input type="button" value="Add Option" />
-//     </React.Fragment>
-//   );
-// }
+class AddOption extends Component {
+  constructor(props){
+    super(props);
+    this.handelAddoption = this.handelAddoption.bind(this);
+  }
+  handelAddoption(e) {
+   
+    e.preventDefault();
+  
+    let option = e.target.elements.option.value.trim();
 
-// export default IndecisionApp;
+    if (option) {
+      this.props.handelAddoption(option);
+      e.target.elements.option.value="";
+
+    }
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <form onSubmit={this.handelAddoption} >
+          <input type="text" name="option" />
+         <button>Add Option</button>
+        </form>
+      </React.Fragment>
+    );
+  }
+}
+
+export default IndecisionApp;
 
 
 

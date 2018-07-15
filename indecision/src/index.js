@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Counter from './App';
+import IndecisionApp from './App';
 
 
 
-ReactDOM.render(<Counter data="someData"/>, document.getElementById('root'));
+ReactDOM.render(<IndecisionApp/>, document.getElementById('root'));
 
 
 
